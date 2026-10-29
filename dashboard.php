@@ -3,13 +3,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
 
-if (!isset($_SESSION['user_id']) || !is_int($_SESSION['user_id'])) {
-    redirect('register.php');
-}
+require_login();
 
-$userName = isset($_SESSION['user_name']) && is_string($_SESSION['user_name'])
-    ? $_SESSION['user_name']
-    : 'there';
+$user = current_user();
+$lastLogin = $user['last_login_at'] ?? null;
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,8 +20,22 @@ $userName = isset($_SESSION['user_name']) && is_string($_SESSION['user_name'])
 <main class="auth-page">
     <section class="auth-card" aria-labelledby="dashboard-title">
         <p class="eyebrow">SWD Auth</p>
-        <h1 id="dashboard-title">Welcome, <?= e($userName) ?>.</h1>
-        <p>Your account is registered and you are signed in.</p>
+        <h1 id="dashboard-title">Welcome, <?= e((string) $user['name']) ?>.</h1>
+        <p>Your account is signed in.</p>
+        <dl>
+            <dt>Email</dt>
+            <dd><?= e((string) $user['email']) ?></dd>
+            <dt>Role</dt>
+            <dd><?= e((string) $user['role']) ?></dd>
+            <dt>Member since</dt>
+            <dd><?= e((string) $user['created_at']) ?></dd>
+            <dt>Last login</dt>
+            <dd><?= is_string($lastLogin) ? e($lastLogin) : 'Not available' ?></dd>
+        </dl>
+        <form method="post" action="logout.php">
+            <?= csrf_field() ?>
+            <button type="submit">Sign out</button>
+        </form>
     </section>
 </main>
 </body>

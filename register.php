@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
 
+require_guest();
+
 $errors = [];
 $name = '';
 $email = '';
@@ -62,7 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     $insert = $pdo->prepare(
-                        'INSERT INTO users (name, email, password_hash) VALUES (:name, :email, :password_hash)'
+                        'INSERT INTO users (name, email, password_hash, last_login_at)
+                         VALUES (:name, :email, :password_hash, CURRENT_TIMESTAMP)'
                     );
                     $insert->execute([
                         'name' => $name,
@@ -83,7 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     session_regenerate_id(true);
                     unset($_SESSION['_csrf_token'], $_SESSION['_old']);
                     $_SESSION['user_id'] = (int) $pdo->lastInsertId();
-                    $_SESSION['user_name'] = $name;
+                    $_SESSION['role'] = 'user';
+                    $_SESSION['last_activity_at'] = time();
 
                     redirect('dashboard.php');
                 }
@@ -104,6 +108,7 @@ $email = old('email', $email);
 unset($_SESSION['_old']);
 
 $successMessage = flash('success');
+$errorMessage = flash('error');
 ?>
 <!doctype html>
 <html lang="en">
@@ -124,6 +129,9 @@ $successMessage = flash('success');
 
         <?php if (is_string($successMessage)): ?>
             <div class="notice notice-success" role="status"><?= e($successMessage) ?></div>
+        <?php endif; ?>
+        <?php if (is_string($errorMessage)): ?>
+            <div class="notice notice-error" role="alert"><?= e($errorMessage) ?></div>
         <?php endif; ?>
 
         <?php if ($errors !== []): ?>
@@ -158,6 +166,7 @@ $successMessage = flash('success');
 
             <button type="submit">Create account</button>
         </form>
+        <p>Already have an account? <a href="login.php">Sign in</a>.</p>
     </section>
 </main>
 </body>

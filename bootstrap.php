@@ -10,6 +10,7 @@ ini_set('display_startup_errors', APP_ENV === 'development' ? '1' : '0');
 require_once __DIR__ . '/src/db.php';
 require_once __DIR__ . '/src/helpers.php';
 require_once __DIR__ . '/src/csrf.php';
+require_once __DIR__ . '/src/auth.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     ini_set('session.use_strict_mode', '1');
@@ -30,3 +31,5 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
     session_start();
 }
+
+enforce_idle_timeout();
