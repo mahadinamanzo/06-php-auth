@@ -17,6 +17,7 @@ $lastLogin = $user['last_login_at'] ?? null;
     <link rel="stylesheet" href="assets/auth.css">
 </head>
 <body>
+<?php render_navbar(); ?>
 <main class="auth-page">
     <section class="auth-card" aria-labelledby="dashboard-title">
         <p class="eyebrow">SWD Auth</p>

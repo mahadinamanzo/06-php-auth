@@ -17,15 +17,21 @@ CREATE TABLE IF NOT EXISTS users (
 ) ENGINE=InnoDB;
 
 ALTER TABLE users
+    MODIFY COLUMN email VARCHAR(254) NOT NULL,
     ADD COLUMN IF NOT EXISTS role VARCHAR(20) NOT NULL DEFAULT 'user' AFTER password_hash,
     ADD COLUMN IF NOT EXISTS last_login_at TIMESTAMP NULL DEFAULT NULL AFTER created_at;
 
 CREATE TABLE IF NOT EXISTS login_attempts (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(254) NOT NULL,
-    ip_address VARBINARY(16) NULL,
+    ip VARCHAR(45) NULL,
     attempted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     KEY idx_login_attempts_email_time (email, attempted_at),
+    KEY idx_login_attempts_ip_time (ip, attempted_at),
     KEY idx_login_attempts_time (attempted_at)
 ) ENGINE=InnoDB;
+
+ALTER TABLE login_attempts
+    ADD COLUMN IF NOT EXISTS ip VARCHAR(45) NULL AFTER email,
+    MODIFY COLUMN email VARCHAR(254) NOT NULL;

@@ -17,6 +17,32 @@ body {
     margin: 0;
 }
 
+.site-nav {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px max(16px, calc((100% - 1120px) / 2));
+    border-bottom: 1px solid #e4e9f2;
+    background: #fff;
+}
+
+.site-nav a {
+    color: #304cc3;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.site-brand {
+    letter-spacing: 0.02em;
+}
+
+.site-nav-links {
+    display: flex;
+    gap: 20px;
+}
+
 .auth-page {
     display: grid;
     min-height: 100vh;
@@ -34,6 +60,55 @@ body {
     border-radius: 18px;
     background: #fff;
     box-shadow: 0 20px 55px rgba(30, 48, 85, 0.1);
+}
+
+.auth-card-wide {
+    width: min(100%, 1120px);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e4e9f2;
+    vertical-align: middle;
+}
+
+th {
+    color: #536078;
+    font-size: 0.85rem;
+}
+
+td form {
+    display: flex;
+    min-width: 190px;
+    align-items: center;
+    gap: 8px;
+}
+
+td select {
+    min-height: 38px;
+    padding: 6px 9px;
+    border: 1px solid #d5dce8;
+    border-radius: 8px;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+}
+
+td button {
+    min-height: 38px;
+    margin: 0;
+    padding: 0 12px;
 }
 
 .auth-header {
