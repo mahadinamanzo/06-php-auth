@@ -11,6 +11,7 @@ function render_navbar(): void
         <?php if ($user !== null): ?>
             <div class="site-nav-links">
                 <a href="<?= e($basePath) ?>dashboard.php">Dashboard</a>
+                <a href="<?= e($basePath) ?>profile.php">Profile</a>
                 <?php if ($user['role'] === 'admin'): ?>
                     <a href="<?= e($basePath) ?>admin/users.php">Admin</a>
                 <?php endif; ?>

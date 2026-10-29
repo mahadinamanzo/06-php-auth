@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 define('APP_ENV', getenv('APP_ENV') ?: 'development');
+define('APP_HTTPS_HOST', getenv('APP_HTTPS_HOST') ?: '');
 
 define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 define('DB_NAME', getenv('DB_NAME') ?: 'swd_auth');
